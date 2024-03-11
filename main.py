@@ -17,11 +17,11 @@ token = os.environ.get("TOKEN")
 
 app = Client("yt", bot_token=token, api_id = api_id, api_hash = api_hash)
 
-Sudo_id = '1390519416'
+Sudo_id = '6975380739'
 @app.on_message(ay.command("start"))
 async def start(client, message):
    await message.reply_text(
-      "👋┇أهلاً بك عزيزي،\nمع البوت يمكنك\nتحميل من اليوتيوب بصيغ\nمتعددة والاستماع اليها في أي وقت\nمع ميزه البحث فقط اكتب بحث +\nالكلمه",
+      "مرحبا عزيزي ،\nتنزيل فيديو او صوت ارسل رابط الفيديو\nالاعلي جوده فالتنـزيل\nلمشاركه البوت : @yt7_ybot",
       reply_markup=InlineKeyboardMarkup(
          [
             [
@@ -40,8 +40,8 @@ async def ytdl(client, message):
       reply_markup=InlineKeyboardMarkup(
          [
             [
-               InlineKeyboardButton("🎧 مقطع صوتي .", callback_data="audio"),
-               InlineKeyboardButton("🎬 مقطع فيديو .", callback_data="video"),
+               InlineKeyboardButton("مقطعةصوتي", callback_data="audio"),
+               InlineKeyboardButton("فيديو", callback_data="video"),
             ]
          ]
       )
@@ -49,17 +49,17 @@ async def ytdl(client, message):
 
 @app.on_callback_query(ay.regex("video"))
 async def VideoDownLoad(client, callback_query):
-   await callback_query.edit_message_text("*🎚 ┇ يتم قياس حجم التحميل*")
+   await callback_query.edit_message_text("*انتـظر يتم تحمـيل الفيديو...♥⚡*")
    try:
       url = callback_query.message.text.split(' : ',1)[1]
       with YoutubeDL(video) as ytdl:
-         await callback_query.edit_message_text("*♻️┇جاري التحميل...*")
+         await callback_query.edit_message_text("*جاري التحميل....*")
          ytdl_data = ytdl.extract_info(url, download=True)
          video_file = ytdl.prepare_filename(ytdl_data)
    except Exception as e:
       await client.send_message(chat_id=Sudo_id,text=e)
       return await callback_query.edit_message_text(e)
-   await callback_query.edit_message_text("*🚀 يتم الرفع علي خوادم تلكرام *")
+   await callback_query.edit_message_text("*اذا اعجبك البوت ارجو المشاركه...*")
    await client.send_video(
             callback_query.message.chat.id,
             video=video_file,
@@ -73,18 +73,18 @@ async def VideoDownLoad(client, callback_query):
 
 @app.on_callback_query(ay.regex("audio"))
 async def AudioDownLoad(client, callback_query):
-   await callback_query.edit_message_text("*🎚 ┇ يتم قياس حجم التحميل*")
+   await callback_query.edit_message_text("*انتـظر يتم تحمـيل الصـوت...❄⚡*")
    try:
       url = callback_query.message.text.split(' : ',1)[1]
       with YoutubeDL(audio) as ytdl:
-         await callback_query.edit_message_text("*♻️┇جاري التحميل...*")
+         await callback_query.edit_message_text("*انتـظر جاري التحميل...*")
          ytdl_data = ytdl.extract_info(url, download=True)
          audio_file = ytdl.prepare_filename(ytdl_data)
          thumb = wget.download(f"https://img.youtube.com/vi/{ytdl_data['id']}/hqdefault.jpg")
    except Exception as e:
       await client.send_message(chat_id=Sudo_id,text=e)
       return await callback_query.edit_message_text(e)
-   await callback_query.edit_message_text("*🚀 يتم الرفع علي خوادم تلكرام *")
+   await callback_query.edit_message_text("*اذا اعجبك البوت ارجو المشاركه...*")
    await client.send_audio(
       callback_query.message.chat.id,
       audio=audio_file,
